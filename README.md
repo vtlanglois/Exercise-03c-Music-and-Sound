@@ -34,7 +34,7 @@ func _on_Music_finished():
 
 I will leave it as an exercise for you to figure out how and when to play the sound effects. Remember, you will need to find the nodes from within a script (most likely in res://Pieces/Piece.gd). To play the sound, you just need to call the particular node's play() method.
 
-Finally, we will set up an update-score animation. Create a new 2D Scene. Change the name of Node2D to Coin. Add two Sprite nodes (name the second one Highlight) and a Tween node. Attach a script to the Coin node (save it as res://Coin/Coin.gd).
+Finally, we will set up an update-score animation. Create a new 2D Scene. Change the name of Node2D to Coin. Add two Sprite nodes (name the second one Highlight) and a Tween node. Also, add a Timer node, set it to autostart and set its timeout for 2.5. The Texture for the Sprite node should be res://Assets/coin.png. The Highlight node should have res://Assets/coin_highlight.png. Attach a script to the Coin node (save it as res://Coin/Coin.gd).
 
 We want the coin to scale from (0,0) to (1,1) in 0.25 seconds, and then to do the following:
  * Animate the global_position from its current global_position to (20,15) over 0.75 seconds
@@ -51,15 +51,18 @@ var c = 0
 
 func _ready():
 	# animate the behavior
+	pass
 
 func _physics_process(_delta):
 	$Highlight.modulate.a = (sin(c)/2)+0.5
 	c += 0.5
 ```
+Select the Timer node and add a timeout() signal. Attach it to the Coin.gd script; the only job of the resulting method is to queue_free()
+
 
 When you are done, save the scene as res://Coin/Coin.tscn.
 
-In res://Pieces/Piece.gd, add this to line 18:
+In res://Pieces/Piece.gd, add this above the `_ready()` function:
 ```
 var Coin = preload("res://Coin/Coin.tscn")
 ```
