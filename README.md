@@ -14,7 +14,67 @@ If you run the project, you will see a main menu followed by a simple match-3 ga
 
 ---
 
+Open res://UI/Menu.tscn. Add a new Sprite child node to Menu, and make it the top child (appearing above Background). The texture for the sprite should be res://Assets/background1.png. Turn off Sprite->Offset->Centered. Update its position.x = -130
 
+Add a Custom Font to the Label node (res://Assets/FFF_NEPSZA-BADSAG-Bold.otf, size=36). Add a Custom Font to the Play and Quit buttons (res://Assets/Ignotum.otf, size=20)
+
+Open res://Game.tscn. Add res://Assets/background2.png as the background for this scene. Update the /Game/HUD/Score label to use res://Assets/Ignotum.otf, size=18
+
+The next part of the assignment is to record three (short) sound effect in Audacity. Save them as 1.wav, 2.wav, and 3.wav, and copy them into the Assets folder for the project.
+
+You will then need to write a simple melody in MuseScore. It doesn't have to be pretty or elaborate. Export the music as an Ogg Vorbis file (music.ogg) and copy it into the Assets folder for the project.
+
+Back in Godot, add four AudioStreamPlayer nodes to Game. Name them Music, 1, 2, and 3. 
+
+Add res://Assets/music.ogg as the Stream for the Music node. Set Autoplay=On. Attach an empty script to the Music node and save it as res://UI/Music.gd. Add a finished() Signal to the node, and the resulting function should appear as follows:
+```
+func _on_Music_finished():
+	play()
+```
+
+I will leave it as an exercise for you to figure out how and when to play the sound effects. Remember, you will need to find the nodes from within a script (most likely in res://Pieces/Piece.gd). To play the sound, you just need to call the particular node's play() method.
+
+Finally, we will set up an update-score animation. Create a new 2D Scene. Change the name of Node2D to Coin. Add two Sprite nodes (name the second one Highlight) and a Tween node. Attach a script to the Coin node (save it as res://Coin/Coin.gd).
+
+We want the coin to scale from (0,0) to (1,1) in 0.25 seconds, and then to do the following:
+ * Animate the global_position from its current global_position to (20,15) over 0.75 seconds
+ * Animate the scale from (1,1) to (0.2,0.2) over 0.5 seconds
+ * Animate the modulate.a from 1.0 to 0.0 over 2.0 seconds
+
+(remember to start() the $Tween node after each interpolate_property call). All of that can be done in the _ready() function.
+
+The rest of the script can look like this:
+```
+extends Node2D
+
+var c = 0
+
+func _ready():
+	# animate the behavior
+
+func _physics_process(_delta):
+	$Highlight.modulate.a = (sin(c)/2)+0.5
+	c += 0.5
+```
+
+When you are done, save the scene as res://Coin/Coin.tscn.
+
+In res://Pieces/Piece.gd, add this to line 18:
+```
+var Coin = preload("res://Coin/Coin.tscn")
+```
+
+Then append this to the die() function:
+```
+	if Effects == null:
+		Effects = get_node_or_null("/root/Game/Effects")
+	if Effects != null:
+		var coin = Coin.instance()
+		coin.position = target_position
+		Effects.add_child(coin)
+```
+
+Save the script and the scene.
 ---
 
 Test the game and make sure it is working correctly. You should be able to see all (and hear!) the changes you have made.
