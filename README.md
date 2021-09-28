@@ -2,6 +2,8 @@
 
 Exercise for MSCH-C220, 28 September 2021
 
+A demonstration of this exercise is available at [https://youtu.be/VR7JY77brQo](https://youtu.be/VR7JY77brQo)
+
 This exercise will add sound effects, music, and a few more juicy features to our match-3 game. The exercise will provide you with several features that should help with the implementation of Project 03.
 
 Fork this repository. When that process has completed, make sure that the top of the repository reads [your username]/Exercise-03c-Music-and-Sound. Edit the LICENSE and replace BL-MSCH-C220-F21 with your full name. Commit your changes.
