@@ -15,7 +15,6 @@ export var transparent_time = 1.0
 export var scale_time = 1.5
 export var rot_time = 1.5
 
-var Coin = preload("res://Coin.tscn")
 
 
 func _ready():
@@ -43,10 +42,3 @@ func move_piece(change):
 
 func die():
 	dying = true;
-	if Effects == null:
-		Effects = get_node_or_null("/root/Game/Effects")
-	if Effects != null:
-		var coin = Coin.instance()
-		coin.position = position
-		Effects.add_child(coin)
-	
