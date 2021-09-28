@@ -75,6 +75,7 @@ Then append this to the die() function:
 ```
 
 Save the script and the scene.
+
 ---
 
 Test the game and make sure it is working correctly. You should be able to see all (and hear!) the changes you have made.
